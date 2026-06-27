@@ -1,22 +1,11 @@
 from fastapi import FastAPI
 
+from app.api.router import api_router
+
 app = FastAPI(
     title="EngageAI API",
     description="AI-powered Instagram Growth Assistant",
-    version="1.0.0"
+    version="1.0.0",
 )
 
-
-@app.get("/")
-def root():
-    return {
-        "message": "Welcome to EngageAI API 🚀"
-    }
-
-
-@app.get("/health")
-def health():
-    return {
-        "status": "healthy",
-        "version": "1.0.0"
-    }
+app.include_router(api_router)
