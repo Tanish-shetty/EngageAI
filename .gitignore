@@ -1,9 +1,9 @@
 # Python
 venv/
 __pycache__/
+.env
 *.pyc
-*.pyo
-
+node_modules/
 # Environment
 .env
 
