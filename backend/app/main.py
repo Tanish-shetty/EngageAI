@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 
 from app.api.router import api_router
+from app.core.config import settings
 
 app = FastAPI(
-    title="EngageAI API",
+    title=settings.APP_NAME,
     description="AI-powered Instagram Growth Assistant",
-    version="1.0.0",
+    version=settings.APP_VERSION,
 )
 
 app.include_router(api_router)
