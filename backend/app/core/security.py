@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta, timezone
 
 import bcrypt
-from jose import jwt
+from jose import JWTError, jwt
 
 from app.core.config import settings
 
@@ -68,3 +68,19 @@ def create_access_token(
     )
 
     return encoded_jwt
+
+
+def verify_access_token(token: str) -> dict | None:
+    """
+    Verify and decode a JWT access token.
+    """
+    try:
+        payload = jwt.decode(
+            token,
+            settings.SECRET_KEY,
+            algorithms=[settings.ALGORITHM],
+        )
+        return payload
+
+    except JWTError:
+        return None
