@@ -1,75 +1,52 @@
+"""
+=====================================================
+EngageAI Data Preprocessing
+=====================================================
+
+This module handles:
+
+1. Loading the dataset
+2. Cleaning data
+3. Encoding categorical variables
+4. Feature engineering
+5. Splitting features and targets
+6. Saving encoders & feature columns
+
+Used by:
+- train.py
+- inference.py
+=====================================================
+"""
+
 from pathlib import Path
 
 import joblib
 import pandas as pd
 
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import OrdinalEncoder, LabelEncoder
+from sklearn.preprocessing import LabelEncoder, OrdinalEncoder
 
-# =====================================================
-# Paths
-# =====================================================
-
-BASE_DIR = Path(__file__).resolve().parent
-ML_DIR = BASE_DIR.parent
-
-MODEL_DIR = ML_DIR / "models"
-MODEL_DIR.mkdir(parents=True, exist_ok=True)
-
-# =====================================================
-# Columns
-# =====================================================
-
-# Columns that should never be used for prediction
-DROP_COLUMNS = [
-    "post_id",
-    "account_id",
-    "post_datetime",
-    "post_date",
-]
-
-# Input categorical columns
-CATEGORICAL_COLUMNS = [
-    "account_type",
-    "media_type",
-    "content_category",
-    "traffic_source",
-    "day_of_week",
-]
-
-# Regression targets
-REGRESSION_TARGETS = [
-    "likes",
-    "comments",
-    "shares",
-    "saves",
-]
-
-# Classification targets
-CLASSIFICATION_TARGETS = [
-    "viral_flag",
-    "performance_bucket_label",
-]
-
-# All target columns
-TARGET_COLUMNS = (
-    REGRESSION_TARGETS
-    + CLASSIFICATION_TARGETS
-    + [
-        "reach",
-        "impressions",
-        "engagement_rate",
-    ]
+from config import (
+    DROP_COLUMNS,
+    CATEGORICAL_COLUMNS,
+    TARGET_COLUMNS,
+    REGRESSION_TARGETS,
+    FEATURE_COLUMNS_FILE,
+    ENCODER_FILE,
 )
+
+from feature_engineering import engineer_features
+
 
 # =====================================================
 # Load Dataset
 # =====================================================
 
-def load_data(path: str) -> pd.DataFrame:
+def load_data(path):
     """
-    Load CSV dataset.
+    Load dataset from CSV.
     """
+
     return pd.read_csv(path)
 
 
@@ -77,23 +54,27 @@ def load_data(path: str) -> pd.DataFrame:
 # Preprocess Dataset
 # =====================================================
 
-def preprocess_data(df: pd.DataFrame):
+def preprocess_data(df):
     """
-    Clean dataset and encode categorical columns.
+    Clean dataset, encode categorical columns,
+    and create engineered features.
     """
 
     df = df.copy()
 
+    # ---------------------------------------------
     # Drop unwanted columns
+    # ---------------------------------------------
+
     df.drop(
         columns=DROP_COLUMNS,
         inplace=True,
         errors="ignore",
     )
 
-    # -------------------------
-    # Encode input features
-    # -------------------------
+    # ---------------------------------------------
+    # Encode categorical columns
+    # ---------------------------------------------
 
     ordinal_encoder = OrdinalEncoder(
         handle_unknown="use_encoded_value",
@@ -104,9 +85,9 @@ def preprocess_data(df: pd.DataFrame):
         df[CATEGORICAL_COLUMNS]
     )
 
-    # -------------------------
-    # Encode performance bucket
-    # -------------------------
+    # ---------------------------------------------
+    # Encode performance labels
+    # ---------------------------------------------
 
     performance_encoder = LabelEncoder()
 
@@ -116,7 +97,10 @@ def preprocess_data(df: pd.DataFrame):
         )
     )
 
+    # ---------------------------------------------
     # Save encoders
+    # ---------------------------------------------
+
     encoders = {
         "ordinal_encoder": ordinal_encoder,
         "performance_encoder": performance_encoder,
@@ -124,19 +108,25 @@ def preprocess_data(df: pd.DataFrame):
 
     joblib.dump(
         encoders,
-        MODEL_DIR / "encoders.pkl",
+        ENCODER_FILE,
     )
+
+    # ---------------------------------------------
+    # Feature Engineering
+    # ---------------------------------------------
+
+    df = engineer_features(df)
 
     return df
 
 
 # =====================================================
-# Feature / Target Split
+# Prepare Features & Targets
 # =====================================================
 
-def prepare_features(df: pd.DataFrame):
+def prepare_features(df):
     """
-    Split dataset into X and multiple targets.
+    Split dataframe into features and targets.
     """
 
     X = df.drop(
@@ -151,9 +141,10 @@ def prepare_features(df: pd.DataFrame):
     y_performance = df["performance_bucket_label"]
 
     # Save feature names
+
     joblib.dump(
         list(X.columns),
-        MODEL_DIR / "feature_columns.pkl",
+        FEATURE_COLUMNS_FILE,
     )
 
     return (
@@ -171,7 +162,7 @@ def prepare_features(df: pd.DataFrame):
 def split_dataset(
     X,
     y,
-    test_size=0.2,
+    test_size=0.20,
     random_state=42,
 ):
     """
@@ -187,7 +178,7 @@ def split_dataset(
 
 
 # =====================================================
-# Load Saved Objects
+# Load Saved Feature Columns
 # =====================================================
 
 def load_feature_columns():
@@ -196,9 +187,13 @@ def load_feature_columns():
     """
 
     return joblib.load(
-        MODEL_DIR / "feature_columns.pkl"
+        FEATURE_COLUMNS_FILE
     )
 
+
+# =====================================================
+# Load Saved Encoders
+# =====================================================
 
 def load_encoders():
     """
@@ -206,5 +201,5 @@ def load_encoders():
     """
 
     return joblib.load(
-        MODEL_DIR / "encoders.pkl"
+        ENCODER_FILE
     )
