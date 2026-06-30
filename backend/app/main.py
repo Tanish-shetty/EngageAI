@@ -20,3 +20,12 @@ app = FastAPI(
 )
 
 app.include_router(api_router)
+
+@app.get("/")
+def root():
+    return {
+        "status": "running",
+        "application": settings.APP_NAME,
+        "version": settings.APP_VERSION,
+        "message": "Welcome to EngageAI 🚀"
+    }
