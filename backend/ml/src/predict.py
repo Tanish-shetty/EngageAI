@@ -16,7 +16,7 @@ Used for:
 
 from pprint import pprint
 
-from inference import predict
+from .inference import predict
 
 
 def main():

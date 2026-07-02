@@ -42,19 +42,19 @@ from sklearn.metrics import (
     classification_report,
 )
 
-from preprocess import (
+from .preprocess import (
     load_data,
     preprocess_data,
     prepare_features,
 )
 
-from utils import (
+from .utils import (
     save_model,
     save_json,
     save_feature_importance,
 )
 
-from config import *
+from .config import *
 
 # =====================================================
 # Load Dataset

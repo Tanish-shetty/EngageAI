@@ -30,8 +30,8 @@ from typing import Dict, Any
 import numpy as np
 import pandas as pd
 
-from feature_engineering import engineer_features
-from model_loader import model_loader
+from .feature_engineering import engineer_features
+from .model_loader import model_loader
 
 # =====================================================
 # Required User Inputs
