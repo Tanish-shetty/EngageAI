@@ -1,0 +1,6 @@
+{
+    "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "dimension": 384,
+    "chunks": 1,
+    "last_updated": "2026-07-02T14:21:23.824812"
+}
