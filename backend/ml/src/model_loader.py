@@ -15,7 +15,7 @@ Models are loaded only once when the application starts.
 
 import joblib
 
-from config import (
+from .config import (
     LIKES_MODEL,
     COMMENTS_MODEL,
     SHARES_MODEL,

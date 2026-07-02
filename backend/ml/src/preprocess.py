@@ -26,7 +26,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, OrdinalEncoder
 
-from config import (
+from .config import (
     DROP_COLUMNS,
     CATEGORICAL_COLUMNS,
     TARGET_COLUMNS,
@@ -35,13 +35,13 @@ from config import (
     ENCODER_FILE,
 )
 
-from feature_engineering import engineer_features
+from .feature_engineering import engineer_features
 
 
 # =====================================================
 # Load Dataset
 # =====================================================
-
+ 
 def load_data(path):
     """
     Load dataset from CSV.
