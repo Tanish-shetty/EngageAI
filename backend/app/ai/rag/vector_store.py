@@ -65,7 +65,7 @@ class VectorStore:
 
             item = self.metadata[idx].copy()
 
-            item["score"] = float(score)
+            item["similarity"] = round(float(score), 4)
 
             results.append(item)
 

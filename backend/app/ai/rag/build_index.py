@@ -1,30 +1,26 @@
-from .chunker import DocumentChunker
-from .embedder import EmbeddingService
-from .vector_store import VectorStore
+from app.core.logger import logger
+
+from .index_builder import IndexBuilder
 
 
 def main():
 
-    chunks = DocumentChunker.build_chunks()
+    builder = IndexBuilder()
 
-    print(f"Loaded {len(chunks)} chunks")
+    if builder.needs_rebuild():
 
-    texts = [c["content"] for c in chunks]
+        logger.info("Changes detected.")
+        logger.info("Rebuilding vector store...")
 
-    embeddings = EmbeddingService.encode(texts)
+        success = builder.build()
 
-    store = VectorStore(
-        dimension=embeddings.shape[1]
-    )
+        if success:
+            logger.info("Knowledge base is up to date.")
+        else:
+            logger.error("Vector store rebuild failed.")
 
-    store.add(
-        embeddings,
-        chunks,
-    )
-
-    store.save()
-
-    print("Vector store created successfully.")
+    else:
+        logger.info("Knowledge base already up-to-date.")
 
 
 if __name__ == "__main__":

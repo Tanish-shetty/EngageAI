@@ -45,3 +45,5 @@ FAISS_INDEX_PATH = VECTOR_STORE_DIR / "faiss_index.bin"
 METADATA_PATH = VECTOR_STORE_DIR / "metadata.json"
 
 STATISTICS_PATH = VECTOR_STORE_DIR / "statistics.json"
+
+REGISTRY_PATH = VECTOR_STORE_DIR / "registry.json"

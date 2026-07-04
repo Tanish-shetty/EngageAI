@@ -20,7 +20,9 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int
 
     # Groq
-    GROQ_API_KEY: str = ""
+    GROQ_API_KEY: str
+    GROQ_MODEL: str = "llama-3.3-70b-versatile"
+
 
     model_config = SettingsConfigDict(
         env_file=".env",
