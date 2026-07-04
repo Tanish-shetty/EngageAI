@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
+from app.core.responses import success_response
 from sqlalchemy.orm import Session
 from app.core.dependencies import get_current_user
 from app.models.user import User
@@ -71,8 +72,8 @@ def login(
     )
 
     return {
-        "access_token": access_token,
-        "token_type": "bearer",
+       "access_token": access_token,
+       "token_type": "bearer",
     }
 
 @router.get(
@@ -82,4 +83,4 @@ def login(
 def get_me(
     current_user: User = Depends(get_current_user),
 ):
-    return current_user
+ return current_user
