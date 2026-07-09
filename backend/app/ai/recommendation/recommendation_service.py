@@ -7,6 +7,7 @@ from app.ai.recommendation.insight_generator import InsightGenerator
 from app.ai.recommendation.prompt_builder import PromptBuilder
 from app.core.logger import logger
 
+
 class RecommendationService:
 
     def __init__(self):
@@ -15,161 +16,165 @@ class RecommendationService:
 
         self.llm = GroqClient()
 
-    from datetime import datetime
+    def generate(self, user_input: dict) -> dict:
+        """
+        Complete recommendation pipeline.
 
-def generate(self, user_input: dict) -> dict:
-    """
-    Complete recommendation pipeline.
-    """
+        Flow:
 
-    # ---------------------------------
-    # Feature Engineering
-    # ---------------------------------
+        User Input
+              │
+              ▼
+        Feature Mapping
+              │
+              ▼
+        ML Prediction
+              │
+              ▼
+        Insight Generation
+              │
+              ▼
+        RAG Retrieval
+              │
+              ▼
+        Prompt Builder
+              │
+              ▼
+        Groq LLM
+              │
+              ▼
+        Final Response
+        """
 
-    user_input = FeatureMapper.enrich(user_input)
+        logger.info("Recommendation request received.")
 
-    # ---------------------------------
-    # Time-based derived features
-    # ---------------------------------
+        try:
 
-    now = datetime.now()
+            # ---------------------------------
+            # Feature Engineering
+            # ---------------------------------
 
-    user_input.setdefault("month", now.month)
+            user_input = FeatureMapper.enrich(user_input)
 
-    user_input.setdefault(
-        "quarter",
-        ((now.month - 1) // 3) + 1,
-    )
+            logger.info("Feature mapping completed.")
 
-    user_input.setdefault(
-        "week_of_year",
-        now.isocalendar().week,
-    )
+            # ---------------------------------
+            # Default values for optional
+            # historical analytics
+            # ---------------------------------
 
-    user_input.setdefault(
-        "weekend_flag",
-        1 if user_input["day_of_week"].lower() in ["saturday", "sunday"] else 0,
-    )
+            defaults = {
+                "engagement_rate": 3.5,
+                "followers_gained": 100,
+                "total_posts_count": 50,
+                "avg_likes_last_10_posts": 200.0,
+                "avg_comments_last_10_posts": 20.0,
+                "avg_engagement_last_10_posts": 4.0,
+                "days_since_last_post": 2,
+                "hours_since_last_post": 24,
+                "posting_frequency_per_week": 4.0,
+            }
 
-    # ---------------------------------
-    # ML Prediction
-    # ---------------------------------
+            for key, value in defaults.items():
+                user_input.setdefault(key, value)
 
-    try:
+            # ---------------------------------
+            # ML Prediction
+            # ---------------------------------
 
-     prediction = predict(user_input)
+            prediction = predict(user_input)
 
-    except Exception:
+            logger.info("ML prediction completed.")
 
-     logger.exception(
-        "Prediction failed."
-    )
+            # ---------------------------------
+            # Generate Insights
+            # ---------------------------------
 
-    raise
+            insights = InsightGenerator.generate(
+                prediction
+            )
 
-    # ---------------------------------
-    # Generate Insights
-    # ---------------------------------
+            logger.info("Insights generated.")
 
-    try:
+            # ---------------------------------
+            # Retrieve RAG Documents
+            # ---------------------------------
 
-     insights = InsightGenerator.generate(
-        prediction
-    )
+            query = (
+                f"{user_input['media_type']} "
+                f"{user_input['content_category']} "
+                "Instagram best practices"
+            )
 
-    except Exception:
+            documents = self.retriever.retrieve(
+                query=query,
+                top_k=5,
+            )
 
-     logger.exception(
-        "Insight generation failed."
-    )
+            logger.info(
+                "Retrieved %d RAG documents.",
+                len(documents),
+            )
 
-    insights = {}
-
-    # ---------------------------------
-    # Retrieve RAG Documents
-    # ---------------------------------
-
-    query = (
-        f"{user_input['media_type']} "
-        f"{user_input['content_category']} "
-        "Instagram best practices"
-    )
-
-    try:
-     documents = self.retriever.retrieve(
-        query=query,
-        top_k=5,
-    )
-
-    except Exception as e:
-     logger.exception(
-        "RAG retrieval failed."
-    )
-
-    documents = []
-
-    if documents:
-
-     rag_context = "\n\n".join(
-        doc["content"]
-        for doc in documents
-    )
-
-    else:
-     rag_context = (
-        "No external knowledge available."
-    )
-
-    # ---------------------------------
-    # Build Prompt
-    # ---------------------------------
-
-    prompt = PromptBuilder.build(
-        user_input=user_input,
-        prediction=prediction,
-        insights=insights,
-        rag_context=rag_context,
-    )
-
-    # ---------------------------------
-    # Generate AI Recommendation
-    # ---------------------------------
-
-    try:
-
-     llm_response = self.llm.generate(
-        prompt
-    )
-
-    except Exception:
-
-     logger.exception(
-        "LLM generation failed."
-    )
-
-    llm_response = (
-        "AI recommendation is temporarily "
-        "unavailable. The prediction "
-        "analysis below can still be used."
-    )
-
-    # ---------------------------------
-    # Final Response
-    # ---------------------------------
-
-    return {
-        "analysis": {
-            "prediction": prediction,
-            "insights": insights,
-        },
-        "ai": {
-            "recommendation": llm_response,
-            "sources": [
-                {
-                    "source": doc["source"],
-                    "similarity": doc["similarity"],
-                }
+            rag_context = "\n\n".join(
+                doc["content"]
                 for doc in documents
-            ],
-        },
-    }
+            )
+
+            # ---------------------------------
+            # Build Prompt
+            # ---------------------------------
+
+            prompt = PromptBuilder.build(
+                user_input=user_input,
+                prediction=prediction,
+                insights=insights,
+                rag_context=rag_context,
+            )
+
+            logger.info("Prompt built successfully.")
+
+            # ---------------------------------
+            # Generate AI Recommendation
+            # ---------------------------------
+
+            llm_response = self.llm.generate(
+                prompt
+            )
+
+            logger.info("Groq recommendation generated.")
+
+            # ---------------------------------
+            # Final Response
+            # ---------------------------------
+
+            response = {
+                "analysis": {
+                    "prediction": prediction,
+                    "insights": insights,
+                },
+                "ai": {
+                    "recommendation": llm_response,
+                    "sources": [
+                        {
+                            "source": doc["source"],
+                            "similarity": doc["similarity"],
+                        }
+                        for doc in documents
+                    ],
+                },
+            }
+
+            logger.info(
+                "Recommendation pipeline completed successfully."
+            )
+
+            return response
+
+        except Exception:
+
+            logger.exception(
+                "Recommendation pipeline failed."
+            )
+
+            raise

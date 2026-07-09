@@ -14,7 +14,16 @@ service = RecommendationService()
 @router.post(
     "/recommend",
     response_model=RecommendationResponse,
+    summary="Generate AI Recommendation",
+    description="""
+Generate personalized Instagram recommendations
+using Machine Learning predictions,
+Retrieval-Augmented Generation (RAG),
+and Groq LLM.
+    """,
+    tags=["Recommendation"],
 )
+
 def recommend(
     request: RecommendationRequest,
 ):

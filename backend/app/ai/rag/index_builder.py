@@ -1,5 +1,4 @@
-from pathlib import Path
-
+from .config import KNOWLEDGE_BASE
 from app.core.logger import logger
 
 from .chunker import DocumentChunker

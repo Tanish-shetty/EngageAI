@@ -6,6 +6,7 @@ from app.core.security import (
     hash_password,
     verify_password,
 )
+from app.core.logger import logger
 
 
 class AuthService:
@@ -21,6 +22,12 @@ class AuthService:
         """
         Retrieve a user by email.
         """
+
+        logger.info(
+            "Searching user with email: %s",
+            email,
+        )
+
         return (
             db.query(User)
             .filter(User.email == email)
@@ -36,6 +43,11 @@ class AuthService:
         Create a new user.
         """
 
+        logger.info(
+            "Creating new user: %s",
+            user_data.email,
+        )
+
         hashed_password = hash_password(
             user_data.password
         )
@@ -50,6 +62,11 @@ class AuthService:
         db.commit()
         db.refresh(new_user)
 
+        logger.info(
+            "User registered successfully: %s",
+            user_data.email,
+        )
+
         return new_user
 
     @staticmethod
@@ -62,18 +79,40 @@ class AuthService:
         Authenticate a user using email and password.
         """
 
+        logger.info(
+            "Login attempt for: %s",
+            email,
+        )
+
         user = AuthService.get_user_by_email(
             db,
             email,
         )
 
         if not user:
+
+            logger.warning(
+                "Login failed. User not found: %s",
+                email,
+            )
+
             return None
 
         if not verify_password(
             password,
             user.hashed_password,
         ):
+
+            logger.warning(
+                "Invalid password for: %s",
+                email,
+            )
+
             return None
+
+        logger.info(
+            "User authenticated successfully: %s",
+            email,
+        )
 
         return user
