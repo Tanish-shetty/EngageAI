@@ -12,7 +12,23 @@ router = APIRouter()
 @router.post(
     "/predict",
     response_model=PredictionResponse,
-    summary="Predict Instagram Post Performance",
+    summary="Predict Instagram Performance",
+    description="""
+Predicts Instagram post performance using
+trained Machine Learning models.
+
+Outputs:
+
+• Likes
+• Comments
+• Shares
+• Saves
+• Reach
+• Impressions
+• Virality
+• Performance Category
+    """,
+    tags=["Prediction"],
 )
 def predict_post(
     request: PredictionRequest,

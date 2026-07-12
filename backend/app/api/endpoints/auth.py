@@ -25,7 +25,16 @@ router = APIRouter()
     "/register",
     response_model=UserResponse,
     status_code=status.HTTP_201_CREATED,
+    summary="Register User",
+    description="""
+Creates a new EngageAI account.
+
+The password is securely hashed using bcrypt before
+being stored in the database.
+    """,
+    tags=["Authentication"],
 )
+
 def register(
     user: UserCreate,
     db: Session = Depends(get_db),
@@ -50,7 +59,14 @@ def register(
 @router.post(
     "/login",
     response_model=Token,
+    summary="Login User",
+    description="""
+Authenticate a registered user and return
+a JWT access token.
+    """,
+    tags=["Authentication"],
 )
+
 def login(
     form_data: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db),
@@ -79,7 +95,14 @@ def login(
 @router.get(
     "/me",
     response_model=UserResponse,
+    summary="Current User",
+    description="""
+Returns the authenticated user's profile.
+Requires a valid Bearer JWT token.
+    """,
+    tags=["Authentication"],
 )
+
 def get_me(
     current_user: User = Depends(get_current_user),
 ):
