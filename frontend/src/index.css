@@ -4,3 +4,7 @@
 
 @import "./styles/theme.css";
 @import "./styles/globals.css";
+
+html {
+  scroll-behavior: smooth;
+}

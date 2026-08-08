@@ -63,12 +63,7 @@ export default function Navbar() {
 
           {/* CTA Buttons */}
           <div className="flex items-center space-x-3">
-            <Button
-              variant="ghost"
-              className="text-sm text-foreground/70 hover:text-purple-300 hover:bg-purple-500/10 transition-all duration-200"
-            >
-              Docs
-            </Button>
+            
             <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-foreground text-sm font-semibold shadow-lg shadow-purple-500/25 transition-all duration-300">
               Explore Features
             </Button>

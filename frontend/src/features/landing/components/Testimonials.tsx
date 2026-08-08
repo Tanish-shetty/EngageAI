@@ -1,70 +1,74 @@
-import { Star } from 'lucide-react'
+import { Star } from "lucide-react";
+
+import Container from "@/components/layout/Container";
+import Section from "@/components/layout/Section";
+import SectionTitle from "@/components/layout/SectionTitle";
+import GradientCard from "@/components/cards/GradientCard";
+
+const testimonials = [
+  {
+    name: "Sarah Johnson",
+    role: "Content Creator",
+    followers: "120K Followers",
+    review:
+      "EngageAI helped me improve my posting strategy. My average engagement increased by almost 35% within a month.",
+  },
+  {
+    name: "Alex Rivera",
+    role: "Digital Marketer",
+    followers: "Marketing Consultant",
+    review:
+      "The caption suggestions and engagement predictions are surprisingly accurate. It saves me hours every week.",
+  },
+  {
+    name: "Priya Sharma",
+    role: "Lifestyle Influencer",
+    followers: "85K Followers",
+    review:
+      "I love the clean dashboard and AI recommendations. It feels like having a social media manager available 24/7.",
+  },
+];
 
 export default function Testimonials() {
-  const testimonials = [
-    {
-      name: 'Sarah Chen',
-      role: 'Instagram Creator',
-      content:
-        'EngageAI has transformed how I approach content. My engagement rates increased by 340% in just two months. It&apos;s like having a team of data scientists analyzing every post.',
-      rating: 5,
-    },
-    {
-      name: 'Marcus Johnson',
-      role: 'Social Media Manager',
-      content:
-        'The best investment for our agency. We&apos;ve reduced content planning time by 70% while improving client results significantly. The predictions are incredibly accurate.',
-      rating: 5,
-    },
-    {
-      name: 'Emma Rodriguez',
-      role: 'Brand Strategist',
-      content:
-        'EngageAI&apos;s hashtag recommendations and posting time analysis are spot-on. Our reach has grown exponentially, and the ROI is undeniable.',
-      rating: 5,
-    },
-  ]
-
   return (
-    <section id="testimonials" className="py-20 border-b border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 text-balance">
-            Loved by Creators Worldwide
-          </h2>
-          <p className="text-lg text-foreground/70 max-w-2xl mx-auto text-pretty">
-            See what Instagram creators are saying about EngageAI
-          </p>
-        </div>
+    <Section id="testimonials">
+      <Container>
+        <SectionTitle
+          title="Loved by Early Users"
+          description="See what creators and marketers are saying about EngageAI."
+        />
 
-        {/* Testimonials Grid */}
-        <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, idx) => (
-            <div key={idx} className="glass-dark rounded-xl p-8 hover:border-purple-500/50 transition-all duration-300">
-              {/* Rating */}
-              <div className="flex gap-1 mb-4">
-                {Array.from({ length: testimonial.rating }).map((_, i) => (
+        <div className="grid gap-8 md:grid-cols-3">
+          {testimonials.map((item) => (
+            <GradientCard key={item.name}>
+              <div className="mb-5 flex">
+                {Array.from({ length: 5 }).map((_, i) => (
                   <Star
                     key={i}
-                    className="w-5 h-5 fill-yellow-400 text-yellow-400"
+                    className="mr-1 h-4 w-4 fill-yellow-400 text-yellow-400"
                   />
                 ))}
               </div>
 
-              {/* Quote */}
-              <p className="text-foreground/90 mb-6 leading-relaxed text-pretty">
-                &quot;{testimonial.content}&quot;
+              <p className="mb-6 text-foreground/70">
+                "{item.review}"
               </p>
 
-              {/* Author */}
-              <div className="border-t border-border pt-4">
-                <p className="font-semibold text-foreground">{testimonial.name}</p>
-                <p className="text-sm text-foreground/70">{testimonial.role}</p>
+              <div>
+                <h4 className="font-semibold">{item.name}</h4>
+
+                <p className="text-sm text-foreground/60">
+                  {item.role}
+                </p>
+
+                <p className="mt-1 text-sm text-purple-300">
+                  {item.followers}
+                </p>
               </div>
-            </div>
+            </GradientCard>
           ))}
         </div>
-      </div>
-    </section>
-  )
+      </Container>
+    </Section>
+  );
 }

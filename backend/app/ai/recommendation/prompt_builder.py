@@ -8,22 +8,18 @@ class PromptBuilder:
         user_input: dict,
         prediction: dict,
         insights: dict,
-        context: list,
+        rag_context: str,
     ) -> str:
-
-        context_text = "\n\n".join(
-            doc["content"] for doc in context
-        )
 
         prompt = f"""
 You are an expert Instagram Growth Strategist.
 
-Your job is to analyze the user's post using:
+Your job is to analyze the user's Instagram post using:
 
-1. ML predictions
-2. Prediction insights
+1. Machine Learning predictions
+2. Model insights
 3. Instagram best practices
-4. Current Instagram trends
+4. Current Instagram growth strategies
 
 ==================================================
 USER INPUT
@@ -47,36 +43,40 @@ MODEL INSIGHTS
 KNOWLEDGE BASE
 ==================================================
 
-{context_text}
+{rag_context}
 
 ==================================================
 YOUR TASK
 ==================================================
 
-Generate:
+Generate highly personalized Instagram advice.
 
-1. Overall summary
-
-2. Strengths
-
-3. Weaknesses
-
-4. Personalized recommendations
-
-5. Action plan
-
-Return ONLY valid JSON using this schema:
+Return ONLY valid JSON using this exact schema:
 
 {{
     "summary": "...",
 
-    "strengths": [],
+    "strengths": [
+        "...",
+        "..."
+    ],
 
-    "weaknesses": [],
+    "weaknesses": [
+        "...",
+        "..."
+    ],
 
-    "recommendations": [],
+    "recommendations": [
+        "...",
+        "...",
+        "..."
+    ],
 
-    "action_plan": []
+    "action_plan": [
+        "...",
+        "...",
+        "..."
+    ]
 }}
 """
 
