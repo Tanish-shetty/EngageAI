@@ -2,18 +2,21 @@
 
 # 🚀 EngageAI
 
-### AI-Powered Instagram Analytics Platform
+### AI-Powered Instagram Analytics & Content Optimization Platform
 
-Predict Instagram post performance using Machine Learning and generate personalized content recommendations using Large Language Models (LLMs) and Retrieval-Augmented Generation (RAG).
+Predict Instagram post performance, generate AI-powered captions and hashtags, and receive personalized content recommendations using Machine Learning, Large Language Models (LLMs), and Retrieval-Augmented Generation (RAG).
 
 ---
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.139-green?logo=fastapi)
-![React](https://img.shields.io/badge/React-Frontend-61DAFB?logo=react)
-![License](https://img.shields.io/badge/License-MIT-yellow)
-![Status](https://img.shields.io/badge/Status-Production%20Ready-success)
+![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-Frontend-3178C6?logo=typescript)
+![MySQL](https://img.shields.io/badge/MySQL-8+-4479A1?logo=mysql)
 ![Machine Learning](https://img.shields.io/badge/Machine%20Learning-LightGBM-orange)
+![LLM](https://img.shields.io/badge/LLM-Groq-purple)
+![RAG](https://img.shields.io/badge/RAG-FAISS-blue)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
 </div>
 
@@ -21,145 +24,285 @@ Predict Instagram post performance using Machine Learning and generate personali
 
 # 📌 Overview
 
-EngageAI is an AI-powered Instagram analytics platform designed to help content creators, businesses, and marketers optimize their social media content before publishing.
+EngageAI is an AI-powered Instagram analytics and content optimization platform designed for content creators, businesses, and digital marketers.
 
-The platform combines **Machine Learning**, **Large Language Models (LLMs)**, and **Retrieval-Augmented Generation (RAG)** to predict post performance, classify engagement potential, and generate personalized content recommendations based on industry best practices.
+Unlike traditional analytics platforms that analyze content only after publishing, EngageAI helps users make data-driven decisions **before publishing**.
 
-Unlike traditional analytics tools that provide insights after a post is published, EngageAI enables users to make data-driven decisions before publishing by forecasting engagement metrics and offering AI-assisted optimization suggestions.
+The platform combines:
+
+- Machine Learning
+- Large Language Models
+- Retrieval-Augmented Generation
+- Predictive Analytics
+- AI-powered Content Generation
+- Historical Performance Tracking
+- User Analytics
+
+EngageAI predicts the expected performance of an Instagram post and provides personalized recommendations to improve its potential reach and engagement.
+
+It also provides AI-powered caption and hashtag generation to simplify the content creation workflow.
 
 ---
 
 # ✨ Key Features
 
-## 📊 Machine Learning Analytics
+## 📊 AI-Powered Instagram Prediction
 
-- Predict Likes
-- Predict Comments
-- Predict Shares
-- Predict Saves
-- Predict Reach
-- Predict Impressions
-- Viral Content Classification
-- Performance Classification
+EngageAI predicts the expected performance of an Instagram post based on account, content, posting, and historical information.
+
+### Predicted Metrics
+
+- ❤️ Likes
+- 💬 Comments
+- 🔄 Shares
+- 🔖 Saves
+- 👀 Reach
+- 📈 Impressions
+- 🔥 Viral Probability
+- 🎯 Performance Category
+- 🤖 Prediction Confidence
+
+The prediction system uses a multi-step wizard to collect the required information before generating the final prediction.
 
 ---
 
 ## 🤖 AI Recommendation Engine
 
+The recommendation engine combines Retrieval-Augmented Generation with Large Language Models to generate personalized content recommendations.
+
+### Features
+
 - Personalized content recommendations
-- Context-aware responses using RAG
-- Groq LLM integration
-- Knowledge-base driven suggestions
+- Context-aware suggestions
 - Caption improvement recommendations
+- Content optimization suggestions
+- Engagement improvement strategies
+- Industry-specific recommendations
+- Knowledge-base driven responses
+
+The system uses a Groq-powered LLM together with a FAISS vector database to retrieve relevant knowledge before generating recommendations.
+
+---
+
+## ✍️ AI Caption Generator
+
+EngageAI provides an AI-powered Instagram caption generator.
+
+Users can provide:
+
+- Media Type
+- Content Category
+- Follower Count
+- Call-to-Action preference
+- Trending Audio preference
+
+The system generates multiple AI-powered caption suggestions that users can copy directly.
+
+---
+
+## #️⃣ AI Hashtag Generator
+
+EngageAI provides an AI-powered hashtag generation system.
+
+Users can specify:
+
+- Media Type
+- Content Category
+- Follower Count
+- Whether trending hashtags should be included
+
+The system generates relevant hashtags based on the selected content and audience.
+
+Users can copy all generated hashtags with a single click.
+
+---
+
+## 📈 Analytics Dashboard
+
+The analytics dashboard provides an overview of the user's historical prediction activity.
+
+### Analytics Include
+
+- Total Predictions
+- Average Viral Probability
+- Average Likes
+- Average Reach
+- Best Media Type
+- Best Content Category
+- Media Type Distribution
+- Performance Distribution
+- Recent Predictions
+
+The dashboard uses charts and statistical summaries to help users understand their content performance patterns.
+
+---
+
+## 📚 Prediction History
+
+Every prediction is stored in the database and associated with the authenticated user.
+
+Users can view:
+
+- Previous predictions
+- Predicted metrics
+- Media Type
+- Content Category
+- Viral Probability
+- Performance Category
+- Confidence Score
+- Recommendations
+- Prediction Timestamp
+
+Individual prediction records can also be opened to view detailed results.
 
 ---
 
 ## 🔐 Authentication & Security
 
-- JWT Authentication
+EngageAI implements secure JWT-based authentication.
+
+### Authentication Features
+
+- User Registration
+- User Login
+- JWT Access Tokens
 - Password Hashing using bcrypt
+- Protected Routes
 - Protected API Endpoints
-- OAuth2 Authentication Flow
+- Authenticated API Requests
+- Current User Profile
+- Logout
+- Session Restoration
+
+The frontend automatically attaches the JWT token to authenticated API requests.
 
 ---
 
-## ⚡ Backend Features
+## 👤 User Profile
 
-- RESTful FastAPI Architecture
-- SQLAlchemy ORM
-- MySQL Database
-- Global Exception Handling
-- Health Monitoring Endpoint
-- Structured Logging
-- Interactive Swagger Documentation
-- Modular Project Architecture
+Authenticated users can access their profile information.
+
+The profile page displays:
+
+- Full Name
+- Email Address
+- Account Information
+
+---
+
+## ⚙️ Settings
+
+The settings section provides basic account controls, including logout functionality.
 
 ---
 
 # 🏗 System Architecture
 
 ```text
-                          +----------------------+
-                          |   React Frontend     |
-                          | (Vite + TailwindCSS) |
-                          +----------+-----------+
-                                     |
-                                     | REST API
-                                     |
-                          +----------v-----------+
-                          |   FastAPI Backend    |
-                          +----------+-----------+
-                                     |
-          +--------------------------+--------------------------+
-          |                          |                          |
-          |                          |                          |
-+---------v---------+      +---------v---------+      +---------v---------+
-| Authentication    |      | ML Prediction     |      | AI Recommendation |
-| JWT + OAuth2      |      | LightGBM Models   |      | Groq + RAG        |
-+---------+---------+      +---------+---------+      +---------+---------+
-          |                          |                          |
-          |                          |                          |
-          |                  +-------v--------+         +-------v--------+
-          |                  | Trained Models |         | Knowledge Base |
-          |                  +----------------+         +-------+--------+
-          |                                                     |
-+---------v---------+                                  +---------v---------+
-| MySQL Database    |                                  | FAISS Vector DB   |
-+-------------------+                                  +-------------------+
+                         ┌─────────────────────────┐
+                         │     React Frontend      │
+                         │   Vite + TypeScript     │
+                         │     Tailwind CSS        │
+                         └────────────┬────────────┘
+                                      │
+                                      │ REST API
+                                      ▼
+                         ┌─────────────────────────┐
+                         │     FastAPI Backend     │
+                         │       Python 3.11       │
+                         └────────────┬────────────┘
+                                      │
+             ┌────────────────────────┼────────────────────────┐
+             │                        │                        │
+             ▼                        ▼                        ▼
+   ┌─────────────────┐      ┌─────────────────┐      ┌─────────────────┐
+   │ Authentication  │      │ ML Prediction   │      │ AI Recommendation│
+   │                 │      │                 │      │                  │
+   │ JWT + OAuth2    │      │ LightGBM        │      │ Groq LLM         │
+   │ bcrypt          │      │ Joblib          │      │ RAG              │
+   └────────┬────────┘      └─────────────────┘      └────────┬─────────┘
+            │                                                  │
+            │                                                  ▼
+            │                                        ┌─────────────────┐
+            │                                        │ FAISS Vector DB │
+            │                                        │ Knowledge Base  │
+            │                                        └─────────────────┘
+            │
+            ▼
+   ┌─────────────────────┐
+   │    MySQL Database   │
+   │                     │
+   │ Users               │
+   │ Prediction History  │
+   │ Application Data    │
+   └─────────────────────┘
 ```
 
 ---
 
-# 📂 Project Structure
+# 🔄 Prediction Workflow
 
 ```text
-EngageAI
-│
-├── backend/
-│   ├── app/
-│   │   ├── api/
-│   │   ├── ai/
-│   │   ├── core/
-│   │   ├── database/
-│   │   ├── models/
-│   │   ├── schemas/
-│   │   ├── services/
-│   │   └── main.py
-│   │
-│   ├── knowledge_base/
-│   ├── ml/
-│   ├── requirements.txt
-│   └── .env.example
-│
-├── frontend/
-│
-├── docs/
-│
-├── LICENSE
-└── README.md
+User
+ │
+ ▼
+Login / Authentication
+ │
+ ▼
+Prediction Wizard
+ │
+ ├── Account Information
+ │
+ ├── Post Information
+ │
+ └── Historical Information
+ │
+ ▼
+Feature Transformation
+ │
+ ▼
+Machine Learning Models
+ │
+ ▼
+Performance Prediction
+ │
+ ├── Likes
+ ├── Comments
+ ├── Shares
+ ├── Saves
+ ├── Reach
+ └── Impressions
+ │
+ ▼
+Viral Classification
+ │
+ ▼
+Performance Classification
+ │
+ ▼
+Recommendation Engine
+ │
+ ▼
+RAG Context Retrieval
+ │
+ ▼
+Groq LLM
+ │
+ ▼
+Personalized Recommendation
+ │
+ ▼
+Prediction Result
+ │
+ ▼
+Saved to Prediction History
 ```
-
----
-
-# 🛠 Tech Stack
-
-| Category | Technologies |
-|----------|--------------|
-| **Backend** | FastAPI, SQLAlchemy, Uvicorn |
-| **Database** | MySQL |
-| **Authentication** | JWT, OAuth2, bcrypt |
-| **Machine Learning** | Scikit-Learn, LightGBM, Joblib |
-| **Artificial Intelligence** | Groq LLM, Sentence Transformers |
-| **Retrieval-Augmented Generation (RAG)** | FAISS, Markdown Knowledge Base |
-| **Frontend** | React, Vite, Tailwind CSS |
-| **Deployment** | Render, Vercel |
-| **Version Control** | Git & GitHub |
 
 ---
 
 # 🧠 Machine Learning Pipeline
 
-The machine learning workflow follows a complete end-to-end pipeline for engagement prediction.
+The machine learning pipeline follows an end-to-end workflow.
 
 ```text
 Instagram Dataset
@@ -180,31 +323,37 @@ Model Training
 Model Evaluation
         │
         ▼
-Saved Models (.pkl)
+Model Serialization
         │
         ▼
 FastAPI Prediction API
+        │
+        ▼
+Frontend Prediction Dashboard
 ```
 
-The trained models are responsible for predicting:
+### Machine Learning Components
 
-- Likes
-- Comments
-- Shares
-- Saves
-- Reach
-- Impressions
-- Viral Potential
-- Performance Category
+- Scikit-Learn
+- LightGBM
+- Joblib
+- Feature Engineering
+- Regression Models
+- Classification Models
+
+The trained models are used to predict Instagram engagement metrics and classify content performance.
 
 ---
 
-# 🤖 AI Recommendation Pipeline
+# 🧩 AI Recommendation Pipeline
 
-EngageAI combines Retrieval-Augmented Generation (RAG) with a Large Language Model (LLM) to generate intelligent recommendations.
+EngageAI uses Retrieval-Augmented Generation to provide recommendations based on domain-specific knowledge.
 
 ```text
-User Request
+User Prediction
+      │
+      ▼
+Recommendation Request
       │
       ▼
 Knowledge Base
@@ -219,34 +368,166 @@ Sentence Embeddings
 FAISS Vector Search
       │
       ▼
-Relevant Context Retrieval
+Relevant Context
       │
       ▼
 Groq LLM
       │
       ▼
-AI-Powered Recommendation
+Personalized Recommendation
 ```
 
-The recommendation engine uses domain-specific knowledge to produce context-aware suggestions rather than relying solely on the language model.
+This approach allows the recommendation engine to use relevant information from the project's knowledge base instead of relying only on the LLM's general knowledge.
+
+---
+
+# ✍️ Content Generation Workflow
+
+## Caption Generation
+
+```text
+User Input
+    │
+    ▼
+Media Type
+    │
+    ├── Content Category
+    ├── Follower Count
+    ├── CTA Preference
+    └── Trending Audio
+    │
+    ▼
+Caption Generation API
+    │
+    ▼
+AI Processing
+    │
+    ▼
+Multiple Caption Suggestions
+```
+
+## Hashtag Generation
+
+```text
+User Input
+    │
+    ▼
+Media Type
+    │
+    ├── Content Category
+    ├── Follower Count
+    └── Trending Preference
+    │
+    ▼
+Hashtag Generation API
+    │
+    ▼
+AI Processing
+    │
+    ▼
+Relevant Hashtag Set
+```
+
+---
+
+# 📂 Project Structure
+
+```text
+EngageAI
+│
+├── backend/
+│   │
+│   ├── app/
+│   │   ├── api/
+│   │   │   └── endpoints/
+│   │   │
+│   │   ├── ai/
+│   │   │   ├── caption/
+│   │   │   ├── hashtag/
+│   │   │   └── recommendation/
+│   │   │
+│   │   ├── core/
+│   │   ├── database/
+│   │   ├── models/
+│   │   ├── schemas/
+│   │   ├── services/
+│   │   └── main.py
+│   │
+│   ├── knowledge_base/
+│   ├── ml/
+│   ├── requirements.txt
+│   └── .env.example
+│
+├── frontend/
+│   │
+│   ├── src/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── features/
+│   │   │   ├── analytics/
+│   │   │   ├── auth/
+│   │   │   ├── captions/
+│   │   │   ├── hashtags/
+│   │   │   ├── history/
+│   │   │   └── prediction/
+│   │   │
+│   │   ├── hooks/
+│   │   ├── lib/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   └── router.tsx
+│   │
+│   ├── package.json
+│   └── vite.config.ts
+│
+├── docs/
+├── LICENSE
+└── README.md
+```
+
+---
+
+# 🛠 Tech Stack
+
+| Category | Technologies |
+|----------|--------------|
+| **Backend** | Python, FastAPI, Uvicorn |
+| **Frontend** | React, TypeScript, Vite |
+| **Styling** | Tailwind CSS |
+| **Database** | MySQL |
+| **ORM** | SQLAlchemy |
+| **Authentication** | JWT, OAuth2, bcrypt |
+| **Machine Learning** | Scikit-Learn, LightGBM, Joblib |
+| **LLM** | Groq |
+| **Embeddings** | Sentence Transformers |
+| **RAG** | FAISS |
+| **Data Processing** | Pandas, NumPy |
+| **API Communication** | Axios |
+| **Forms & Validation** | React Hook Form, Zod |
+| **Charts** | Recharts |
+| **Notifications** | Sonner |
+| **Deployment** | Render, Vercel |
+| **Version Control** | Git, GitHub |
+
+---
 
 # 🚀 Getting Started
 
 ## Prerequisites
 
-Ensure the following tools are installed before setting up the project:
+Make sure the following are installed:
 
-- Python 3.11+
-- Node.js 20+
-- MySQL 8+
+- Python **3.11**
+- Node.js **20+**
+- MySQL **8+**
 - Git
 - Groq API Key
 
+> **Important:** Use Python 3.11 for the backend. Python 3.13 may cause compatibility issues with some Machine Learning and Pydantic dependencies used by the project.
+
 ---
 
-## Installation
-
-### 1. Clone the Repository
+## 1. Clone the Repository
 
 ```bash
 git clone https://github.com/<your-username>/EngageAI.git
@@ -256,27 +537,41 @@ cd EngageAI
 
 ---
 
-### 2. Setup Backend
+## 2. Backend Setup
+
+Navigate to the backend:
 
 ```bash
 cd backend
-
-python -m venv venv
 ```
 
-#### Windows
+Create a Python 3.11 virtual environment.
+
+### Windows
+
+```bash
+py -3.11 -m venv venv
+```
+
+Activate the environment:
 
 ```bash
 venv\Scripts\activate
 ```
 
-#### Linux / macOS
+Verify the Python version:
 
 ```bash
-source venv/bin/activate
+python --version
 ```
 
-Install dependencies
+Expected:
+
+```text
+Python 3.11.x
+```
+
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
@@ -284,9 +579,9 @@ pip install -r requirements.txt
 
 ---
 
-### 3. Configure Environment Variables
+## 3. Configure Environment Variables
 
-Create a `.env` file inside the backend directory.
+Create a `.env` file inside the `backend` directory.
 
 ```env
 APP_NAME=EngageAI
@@ -305,9 +600,13 @@ ACCESS_TOKEN_EXPIRE_MINUTES=30
 GROQ_API_KEY=your_groq_api_key
 ```
 
+Do not commit the `.env` file to GitHub.
+
 ---
 
-### 4. Run the Backend
+## 4. Run the Backend
+
+From the `backend` directory:
 
 ```bash
 uvicorn app.main:app --reload
@@ -315,69 +614,189 @@ uvicorn app.main:app --reload
 
 The backend will be available at:
 
-```
+```text
 http://localhost:8000
 ```
 
-Swagger Documentation:
+API documentation:
 
-```
+```text
 http://localhost:8000/docs
 ```
 
 ---
 
-### 5. Setup Frontend
+## 5. Frontend Setup
+
+Open another terminal and navigate to the frontend:
 
 ```bash
 cd frontend
+```
 
+Install dependencies:
+
+```bash
 npm install
+```
 
+Start the development server:
+
+```bash
 npm run dev
 ```
 
-The frontend will run at:
+The frontend will be available at:
 
-```
+```text
 http://localhost:5173
 ```
 
 ---
 
-# 📚 API Endpoints
+# 🔗 API Endpoints
 
 ## Authentication
 
 | Method | Endpoint | Description |
-|---------|----------|-------------|
+|--------|----------|-------------|
 | POST | `/api/v1/auth/register` | Register a new user |
 | POST | `/api/v1/auth/login` | Authenticate user |
-| GET | `/api/v1/auth/me` | Retrieve current user profile |
+| GET | `/api/v1/auth/me` | Retrieve current authenticated user |
 
 ---
 
-## Machine Learning
+## Prediction
 
 | Method | Endpoint | Description |
-|---------|----------|-------------|
-| POST | `/api/v1/predict` | Predict engagement metrics |
+|--------|----------|-------------|
+| POST | `/api/v1/predict` | Predict Instagram post performance |
 
 ---
 
-## AI Recommendation
+## Recommendations
 
 | Method | Endpoint | Description |
-|---------|----------|-------------|
-| POST | `/api/v1/recommend` | Generate AI-powered recommendations |
+|--------|----------|-------------|
+| POST | `/api/v1/recommend` | Generate personalized AI recommendations |
+
+---
+
+## Caption Generator
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/v1/caption` | Generate AI-powered Instagram captions |
+
+---
+
+## Hashtag Generator
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/v1/hashtag` | Generate AI-powered Instagram hashtags |
+
+---
+
+## Analytics
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/v1/analytics` | Retrieve user analytics |
 
 ---
 
 ## Health
 
 | Method | Endpoint | Description |
-|---------|----------|-------------|
+|--------|----------|-------------|
 | GET | `/api/v1/health` | Check backend health |
+
+---
+
+# 🔐 Authentication Flow
+
+EngageAI uses JWT-based authentication.
+
+```text
+User
+ │
+ ▼
+Login
+ │
+ ▼
+FastAPI Authentication
+ │
+ ▼
+JWT Access Token
+ │
+ ▼
+Browser Local Storage
+ │
+ ▼
+Axios Interceptor
+ │
+ ▼
+Authorization: Bearer <token>
+ │
+ ▼
+Protected FastAPI Endpoints
+```
+
+Protected frontend routes are handled using React Router and `ProtectedRoute`.
+
+---
+
+# 📊 Dashboard
+
+The EngageAI dashboard provides access to:
+
+- AI Viral Prediction
+- Caption Generator
+- Hashtag Generator
+- Analytics
+- Prediction History
+- Profile
+- Settings
+
+The dashboard is protected and accessible only to authenticated users.
+
+---
+
+# 📈 Analytics
+
+The analytics system processes the user's historical prediction records and calculates:
+
+- Total Predictions
+- Average Viral Probability
+- Average Likes
+- Average Reach
+- Best Media Type
+- Best Content Category
+- Media Distribution
+- Performance Distribution
+- Recent Predictions
+
+The frontend visualizes these metrics using interactive charts.
+
+---
+
+# 🗄 Database
+
+EngageAI uses **MySQL** as the primary relational database.
+
+SQLAlchemy is used as the ORM layer.
+
+The database stores information including:
+
+- User accounts
+- Authentication data
+- Prediction history
+- Prediction results
+- Recommendations
+- Timestamps
+
+Each user's prediction history is associated with their authenticated account.
 
 ---
 
@@ -385,51 +804,87 @@ http://localhost:5173
 
 ## Backend
 
-The backend is designed for deployment on **Render**.
+The backend is designed to be deployed using **Render**.
 
-Deployment includes:
+Deployment requires:
 
-- FastAPI
-- MySQL Database
-- Machine Learning Models
-- Groq API Integration
-- FAISS Vector Store
+- Python 3.11
+- MySQL connection
+- Environment variables
+- Groq API key
+- Machine Learning models
+- FAISS vector database
 
 ---
 
 ## Frontend
 
-The frontend is deployed separately using **Vercel**.
+The React frontend is designed to be deployed using **Vercel**.
 
-The React application communicates with the deployed FastAPI backend through REST APIs.
+The frontend communicates with the deployed FastAPI backend through REST APIs.
+
+Configure the backend API URL using:
+
+```env
+VITE_API_BASE_URL=https://your-backend-url
+```
 
 ---
 
 # 🔒 Security
 
-EngageAI follows several security best practices:
+EngageAI follows several security practices:
 
-- JWT Authentication
-- Password Hashing using bcrypt
-- OAuth2 Authentication Flow
-- Environment Variable Configuration
-- Protected API Endpoints
-- Global Exception Handling
+- JWT authentication
+- OAuth2 authentication flow
+- bcrypt password hashing
+- Protected API endpoints
+- Protected frontend routes
+- Environment variable configuration
+- Database-backed user authentication
+- Authorization headers for API requests
+- Sensitive credentials excluded from source code
 
 ---
 
-# 📈 Future Enhancements
+# 🧪 Development Commands
 
-Planned improvements include:
+## Backend
 
-- Multi-platform social media support
-- Image-based content analysis
-- Explainable AI using SHAP
-- Trend forecasting
-- User analytics dashboard
-- Real-time recommendation engine
-- Docker & Kubernetes deployment
-- CI/CD pipeline with GitHub Actions
+```bash
+cd backend
+venv\Scripts\activate
+uvicorn app.main:app --reload
+```
+
+## Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+---
+
+# 🔮 Future Enhancements
+
+Potential future improvements include:
+
+- 📱 Multi-platform social media support
+- 🖼️ Image and video content analysis
+- 🧠 Explainable AI using SHAP
+- 📈 Advanced trend forecasting
+- 🔥 Real-time Instagram trend detection
+- 🎯 Personalized content strategy generation
+- 🤖 AI content calendar generation
+- 📊 Advanced user analytics
+- 🐳 Docker containerization
+- ☸️ Kubernetes deployment
+- 🔄 CI/CD with GitHub Actions
+- 📸 Instagram API integration
+- 🎥 Video content analysis
+- 🌐 Multi-language caption generation
 
 ---
 
@@ -437,12 +892,29 @@ Planned improvements include:
 
 Contributions, feature requests, and suggestions are welcome.
 
-If you would like to contribute:
+To contribute:
 
 1. Fork the repository
-2. Create a new feature branch
-3. Commit your changes
-4. Open a Pull Request
+2. Create a feature branch
+
+```bash
+git checkout -b feature/your-feature
+```
+
+3. Make your changes
+4. Commit your changes
+
+```bash
+git commit -m "Add new feature"
+```
+
+5. Push the branch
+
+```bash
+git push origin feature/your-feature
+```
+
+6. Open a Pull Request
 
 ---
 
@@ -458,9 +930,12 @@ See the [LICENSE](LICENSE) file for more information.
 
 <table>
 <tr>
+
 <td align="center">
 
 ### Tanish Shetty
+
+AI & Data Science
 
 [GitHub](https://github.com/<tanish-github>) • [LinkedIn](https://linkedin.com/in/<tanish-linkedin>)
 
@@ -470,9 +945,12 @@ See the [LICENSE](LICENSE) file for more information.
 
 ### Soumya Patil
 
+AI & Data Science
+
 [GitHub](https://github.com/<soumya-github>) • [LinkedIn](https://linkedin.com/in/<soumya-linkedin>)
 
 </td>
+
 </tr>
 </table>
 
@@ -480,7 +958,7 @@ See the [LICENSE](LICENSE) file for more information.
 
 <div align="center">
 
-### ⭐ If you found this project helpful, consider giving the repository a star!
+### ⭐ If you found EngageAI useful, consider giving the repository a star!
 
 Made with ❤️
 
