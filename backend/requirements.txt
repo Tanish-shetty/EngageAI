@@ -1,43 +1,65 @@
+# ==========================
 # FastAPI
-fastapi==0.139.0
-uvicorn==0.51.0
-starlette==0.47.2
+# ==========================
+fastapi==0.115.6
+uvicorn==0.34.0
+starlette==0.41.3
 
+# ==========================
 # Database
-SQLAlchemy==2.0.51
-PyMySQL==1.1.2
-greenlet==3.2.4
+# ==========================
+SQLAlchemy==2.0.36
+PyMySQL==1.1.1
+greenlet==3.1.1
 
+# ==========================
 # Authentication
-python-jose[cryptography]==3.5.0
-bcrypt==5.0.0
+# ==========================
+python-jose[cryptography]==3.3.0
+bcrypt==4.2.1
 python-multipart==0.0.20
 
+# ==========================
 # Validation
-pydantic==2.13.4
-pydantic-settings==2.14.2
-email-validator==2.3.0
+# ==========================
+pydantic==2.10.4
+pydantic-settings==2.7.0
+email-validator==2.2.0
 
+# ==========================
 # Environment
-python-dotenv==1.1.1
+# ==========================
+python-dotenv==1.0.1
 
+# ==========================
 # Machine Learning
-numpy==2.5.1
-pandas==3.0.3
-scikit-learn==1.9.0
-lightgbm==4.6.0
-joblib==1.5.3
+# ==========================
+numpy==2.2.1
+pandas==2.2.3
+scikit-learn==1.6.0
+lightgbm==4.5.0
+joblib==1.4.2
 
+# ==========================
 # RAG
-faiss-cpu==1.12.0
-sentence-transformers==5.6.0
+# ==========================
+faiss-cpu==1.9.0.post1
+sentence-transformers==3.3.1
+transformers==4.47.1
+torch==2.5.1
 
+# ==========================
 # LLM
-groq==1.5.0
+# ==========================
+groq==0.13.1
 
+# ==========================
 # HTTP
-requests==2.32.5
+# ==========================
+requests==2.32.3
 httpx==0.28.1
 
+# ==========================
 # Utilities
-beautifulsoup4==4.15.0
+# ==========================
+beautifulsoup4==4.12.3

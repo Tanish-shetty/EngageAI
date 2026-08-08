@@ -1,10 +1,16 @@
+from sqlalchemy.orm import Session
+
 from ml.src.inference import predict
+
+from app.models.user import User
+from app.services.prediction_history_service import PredictionHistoryService
 
 from app.ai.llm.groq_client import GroqClient
 from app.ai.rag.retriever import Retriever
 from app.ai.recommendation.feature_mapper import FeatureMapper
 from app.ai.recommendation.insight_generator import InsightGenerator
 from app.ai.recommendation.prompt_builder import PromptBuilder
+
 from app.core.logger import logger
 
 
@@ -16,79 +22,57 @@ class RecommendationService:
 
         self.llm = GroqClient()
 
-    def generate(self, user_input: dict) -> dict:
+    def generate(
+        self,
+        user_input: dict,
+        db: Session,
+        user: User,
+    ) -> dict:
         """
         Complete recommendation pipeline.
 
-        Flow:
-
         User Input
-              │
-              ▼
+            ↓
         Feature Mapping
-              │
-              ▼
+            ↓
         ML Prediction
-              │
-              ▼
-        Insight Generation
-              │
-              ▼
+            ↓
+        Insights
+            ↓
         RAG Retrieval
-              │
-              ▼
+            ↓
         Prompt Builder
-              │
-              ▼
-        Groq LLM
-              │
-              ▼
-        Final Response
+            ↓
+        Groq
+            ↓
+        Save History
+            ↓
+        Response
         """
 
         logger.info("Recommendation request received.")
 
         try:
 
-            # ---------------------------------
-            # Feature Engineering
-            # ---------------------------------
+            # --------------------------------------------------
+            # Feature Mapping
+            # --------------------------------------------------
 
             user_input = FeatureMapper.enrich(user_input)
 
             logger.info("Feature mapping completed.")
 
-            # ---------------------------------
-            # Default values for optional
-            # historical analytics
-            # ---------------------------------
-
-            defaults = {
-                "engagement_rate": 3.5,
-                "followers_gained": 100,
-                "total_posts_count": 50,
-                "avg_likes_last_10_posts": 200.0,
-                "avg_comments_last_10_posts": 20.0,
-                "avg_engagement_last_10_posts": 4.0,
-                "days_since_last_post": 2,
-                "hours_since_last_post": 24,
-                "posting_frequency_per_week": 4.0,
-            }
-
-            for key, value in defaults.items():
-                user_input.setdefault(key, value)
-
-            # ---------------------------------
+            # --------------------------------------------------
             # ML Prediction
-            # ---------------------------------
+            # --------------------------------------------------
 
             prediction = predict(user_input)
 
             logger.info("ML prediction completed.")
 
-            # ---------------------------------
-            # Generate Insights
-            # ---------------------------------
+            # --------------------------------------------------
+            # Insights
+            # --------------------------------------------------
 
             insights = InsightGenerator.generate(
                 prediction
@@ -96,9 +80,9 @@ class RecommendationService:
 
             logger.info("Insights generated.")
 
-            # ---------------------------------
-            # Retrieve RAG Documents
-            # ---------------------------------
+            # --------------------------------------------------
+            # Retrieve Documents
+            # --------------------------------------------------
 
             query = (
                 f"{user_input['media_type']} "
@@ -115,15 +99,13 @@ class RecommendationService:
                 "Retrieved %d RAG documents.",
                 len(documents),
             )
-
             rag_context = "\n\n".join(
-                doc["content"]
-                for doc in documents
-            )
-
-            # ---------------------------------
-            # Build Prompt
-            # ---------------------------------
+    doc["content"]
+    for doc in documents
+)
+            # --------------------------------------------------
+            # Prompt
+            # --------------------------------------------------
 
             prompt = PromptBuilder.build(
                 user_input=user_input,
@@ -134,35 +116,70 @@ class RecommendationService:
 
             logger.info("Prompt built successfully.")
 
-            # ---------------------------------
-            # Generate AI Recommendation
-            # ---------------------------------
+            # --------------------------------------------------
+            # LLM
+            # --------------------------------------------------
 
             llm_response = self.llm.generate(
-                prompt
-            )
+    prompt=prompt,
+    system_prompt=(
+        "You are an expert Instagram Growth Consultant. "
+        "Always respond with valid JSON only."
+    ),
+)
 
             logger.info("Groq recommendation generated.")
 
-            # ---------------------------------
-            # Final Response
-            # ---------------------------------
+            # --------------------------------------------------
+            # Save Prediction History
+            # --------------------------------------------------
+
+            PredictionHistoryService.save(
+    db=db,
+    user_id=user.id,
+    user_input=user_input,
+    prediction=prediction,
+    recommendation=llm_response,
+)
+
+            logger.info(
+                "Prediction history saved."
+            )
+
+            # --------------------------------------------------
+            # Response
+            # --------------------------------------------------
 
             response = {
+
                 "analysis": {
+
                     "prediction": prediction,
+
                     "insights": insights,
+
                 },
+
                 "ai": {
+
                     "recommendation": llm_response,
+
                     "sources": [
+
                         {
+
                             "source": doc["source"],
+
                             "similarity": doc["similarity"],
+
                         }
+
                         for doc in documents
+
                     ],
+
                 },
+
             }
 
             logger.info(

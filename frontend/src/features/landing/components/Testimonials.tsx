@@ -34,7 +34,6 @@ export default function Testimonials() {
     <Section id="testimonials">
       <Container>
         <SectionTitle
-          badge="Testimonials"
           title="Loved by Early Users"
           description="See what creators and marketers are saying about EngageAI."
         />

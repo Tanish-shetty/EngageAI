@@ -21,14 +21,7 @@ export default function Hero() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Side */}
-          <div className="space-y-8">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-500/30 bg-purple-500/10 glass-dark">
-              <Zap className="w-4 h-4 text-purple-400" />
-              <span className="text-sm text-purple-200">
-                AI Copilot for Instagram Creators
-              </span>
-            </div>
+          <div className="space-y-8">           
 
             {/* Heading */}
             <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold text-foreground text-balance leading-tight">
@@ -40,15 +33,6 @@ export default function Hero() {
             <p className="text-lg text-foreground/70 text-pretty max-w-xl leading-relaxed">
               Predict post performance before you publish. Get AI-powered engagement predictions, caption suggestions, hashtag recommendations, and optimal posting times—all free forever.
             </p>
-
-            {/* Free Forever Badge */}
-            <div className="flex items-center gap-2 text-sm">
-              <div className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-pink-400" />
-              <span className="text-foreground/80">
-                <span className="font-semibold text-purple-300">Free Forever</span>
-                {' '}• No Ads • No Subscription • Open Source
-              </span>
-            </div>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 pt-4">

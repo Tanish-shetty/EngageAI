@@ -1,0 +1,1 @@
+export { default as PredictionWizard } from "./components/PredictionWizard";

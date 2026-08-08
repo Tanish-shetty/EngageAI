@@ -57,7 +57,6 @@ export default function Features() {
       <Container>
 
         <SectionTitle
-          badge="Features"
           title="Everything You Need to Grow"
           description="Powerful AI tools designed to help creators maximize engagement and reach."
         />

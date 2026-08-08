@@ -27,6 +27,10 @@ class GroqClient(BaseLLM):
     def generate(
         self,
         prompt: str,
+        system_prompt: str = (
+            "You are an expert Instagram Growth Consultant. "
+            "Always respond with valid JSON only."
+        ),
     ) -> dict:
 
         response = self.client.chat.completions.create(
@@ -42,10 +46,7 @@ class GroqClient(BaseLLM):
             messages=[
                 {
                     "role": "system",
-                    "content": (
-                        "You are an expert Instagram Growth Consultant. "
-                        "Always respond with valid JSON only."
-                    ),
+                    "content": system_prompt,
                 },
                 {
                     "role": "user",

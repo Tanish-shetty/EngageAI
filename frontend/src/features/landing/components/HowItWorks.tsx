@@ -30,7 +30,6 @@ export default function HowItWorks() {
       <Container>
 
         <SectionTitle
-          badge="Workflow"
           title="How EngageAI Works"
           description="Three simple steps to maximize your Instagram performance."
         />

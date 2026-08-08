@@ -21,7 +21,6 @@ export default function WhyCreatorsLove() {
       <Container>
 
         <SectionTitle
-          badge="Creators"
           title="Why Creators Love EngageAI"
           description="Built specifically for modern creators who want better engagement without spending hours analyzing posts."
         />

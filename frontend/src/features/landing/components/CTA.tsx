@@ -13,9 +13,6 @@ export default function CTA() {
       <Container>
         <div className="relative rounded-3xl border border-purple-500/20 bg-white/5 p-12 text-center backdrop-blur-xl">
           <div className="mx-auto max-w-3xl">
-            <span className="inline-block rounded-full border border-purple-500/30 bg-purple-500/10 px-4 py-1 text-sm text-purple-300">
-              Ready to Grow?
-            </span>
 
             <h2 className="mt-6 text-4xl font-bold lg:text-5xl">
               Let AI Supercharge Your Instagram Growth

@@ -35,7 +35,6 @@ export default function FAQ() {
     <Section id="faq">
       <Container>
         <SectionTitle
-          badge="FAQ"
           title="Frequently Asked Questions"
           description="Everything you need to know about EngageAI."
         />

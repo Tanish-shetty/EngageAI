@@ -1,9 +1,21 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
-from app.ai.recommendation.recommendation_service import RecommendationService
+from sqlalchemy.orm import Session
+
+from app.core.dependencies import (
+    get_db,
+    get_current_user,
+)
+
+from app.models.user import User
+
 from app.schemas.recommendation import (
     RecommendationRequest,
     RecommendationResponse,
+)
+
+from app.ai.recommendation.recommendation_service import (
+    RecommendationService,
 )
 
 router = APIRouter()
@@ -14,27 +26,16 @@ service = RecommendationService()
 @router.post(
     "/recommend",
     response_model=RecommendationResponse,
-    summary="Generate AI Recommendation",
-    description="""
-Generate personalized Instagram recommendations
-using Machine Learning predictions,
-Retrieval-Augmented Generation (RAG),
-and Groq LLM.
-    """,
     tags=["Recommendation"],
 )
-
 def recommend(
     request: RecommendationRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ):
 
-    result = service.generate(
-        request.model_dump()
+    return service.generate(
+        user_input=request.model_dump(),
+        db=db,
+        user=current_user,
     )
-
-    from app.core.responses import success_response
-
-    return success_response(
-    data=result,
-    message="Recommendation generated successfully.",
-)
