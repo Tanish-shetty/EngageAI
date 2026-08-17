@@ -5,6 +5,8 @@
 __pycache__/
 *.py[cod]
 *$py.class
+*.pyo
+*.pyd
 
 # ==============================
 # Virtual Environment
@@ -52,6 +54,7 @@ Thumbs.db
 # ==============================
 
 .pytest_cache/
+.mypy_cache/
 .coverage
 htmlcov/
 
@@ -68,3 +71,13 @@ build/
 # ==============================
 
 .ipynb_checkpoints/
+
+# Node
+node_modules/
+dist/
+
+#frontend
+frontend/.vite/
+
+# Local development
+*.local
