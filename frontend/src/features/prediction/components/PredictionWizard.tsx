@@ -52,6 +52,8 @@ export default function PredictionWizard() {
   const [recommendation, setRecommendation] =
     useState<any>(null);
 
+  const [error, setError] = useState<string | null>(null);
+
   const [predictionData, setPredictionData] =
     useState<PredictionData>({
       // Step 1
@@ -83,6 +85,12 @@ export default function PredictionWizard() {
   const handlePrediction = async () => {
     try {
       setLoading(true);
+      setError(null);
+
+      setPrediction(null);
+      setRecommendation(null);
+
+      console.log("🚀 Starting prediction...");
 
       // --------------------------------
       // Prediction API
@@ -91,8 +99,18 @@ export default function PredictionWizard() {
       const predictionPayload =
         transformPredictionData(predictionData);
 
+      console.log(
+        "📤 Prediction payload:",
+        predictionPayload
+      );
+
       const predictionResponse =
         await predictPost(predictionPayload);
+
+      console.log(
+        "✅ Prediction response:",
+        predictionResponse
+      );
 
       setPrediction(predictionResponse);
 
@@ -103,33 +121,62 @@ export default function PredictionWizard() {
       const recommendationPayload =
         transformRecommendationData(predictionData);
 
+      console.log(
+        "📤 Recommendation payload:",
+        recommendationPayload
+      );
+
       const recommendationResponse =
         await getRecommendation(
           recommendationPayload
         );
 
-      setRecommendation(recommendationResponse);
-    } catch (err) {
-      console.error("Prediction failed:", err);
+      console.log(
+        "✅ Recommendation response:",
+        recommendationResponse
+      );
 
-      // Reset partial results if something fails
-      setPrediction(null);
-      setRecommendation(null);
+      setRecommendation(recommendationResponse);
+
+      console.log("🎉 Prediction process completed!");
+
+    } catch (err: any) {
+      console.error(
+        "❌ Prediction process failed:",
+        err
+      );
+
+      const errorMessage =
+        err?.response?.data?.detail ||
+        err?.response?.data?.message ||
+        err?.message ||
+        "Unable to generate prediction. Please try again.";
+
+      setError(errorMessage);
+
     } finally {
       setLoading(false);
     }
   };
 
+  const handleRestart = () => {
+    setPrediction(null);
+    setRecommendation(null);
+    setError(null);
+    setStep(1);
+  };
+
   return (
     <FormProvider {...methods}>
-      <div className="relative min-h-full">
+      <div className="relative">
 
-        {/* ============================== */}
+        {/* ========================================= */}
         {/* Loading Screen */}
-        {/* ============================== */}
+        {/* ========================================= */}
 
         {loading && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
+
             <div className="w-full max-w-md rounded-2xl border border-purple-500/20 bg-[#111114] p-8 text-center shadow-2xl">
 
               {/* Spinner */}
@@ -141,7 +188,7 @@ export default function PredictionWizard() {
 
               <p className="mt-3 text-sm text-white/60">
                 Our AI is predicting your post performance
-                and generating recommendations.
+                and generating personalized recommendations.
               </p>
 
               {/* Loading steps */}
@@ -149,20 +196,23 @@ export default function PredictionWizard() {
 
                 <div className="flex items-center gap-3">
                   <div className="h-2.5 w-2.5 rounded-full bg-purple-500" />
+
                   <span className="text-sm text-white/70">
                     Analyzing post performance
                   </span>
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <div className="h-2.5 w-2.5 rounded-full bg-pink-500 animate-pulse" />
+                  <div className="h-2.5 w-2.5 animate-pulse rounded-full bg-pink-500" />
+
                   <span className="text-sm text-white/70">
                     Generating AI recommendations
                   </span>
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <div className="h-2.5 w-2.5 rounded-full bg-orange-500 animate-pulse" />
+                  <div className="h-2.5 w-2.5 animate-pulse rounded-full bg-orange-500" />
+
                   <span className="text-sm text-white/70">
                     Preparing your results
                   </span>
@@ -178,13 +228,52 @@ export default function PredictionWizard() {
           </div>
         )}
 
-        {/* ============================== */}
-        {/* Wizard */}
-        {/* ============================== */}
+        {/* ========================================= */}
+        {/* Error Screen */}
+        {/* ========================================= */}
 
-        {!prediction && (
+        {!loading && error && (
+          <div className="flex min-h-[500px] items-center justify-center">
+
+            <div className="w-full max-w-md rounded-2xl border border-red-500/20 bg-[#111114] p-8 text-center shadow-2xl">
+
+              <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-red-500/10">
+                <span className="text-2xl">
+                  ⚠️
+                </span>
+              </div>
+
+              <h2 className="text-2xl font-bold text-white">
+                Prediction Failed
+              </h2>
+
+              <p className="mt-3 text-sm text-white/60">
+                {error}
+              </p>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setError(null);
+                  handlePrediction();
+                }}
+                className="mt-6 rounded-lg bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 px-6 py-3 font-medium text-white transition hover:opacity-90"
+              >
+                Try Again
+              </button>
+
+            </div>
+          </div>
+        )}
+
+        {/* ========================================= */}
+        {/* Prediction Wizard */}
+        {/* ========================================= */}
+
+        {!loading && !error && !prediction && (
           <>
             <div className="mb-10 text-center">
+
               <h1 className="text-4xl font-bold">
                 AI Viral Prediction
               </h1>
@@ -193,10 +282,12 @@ export default function PredictionWizard() {
                 Predict your Instagram performance before
                 publishing.
               </p>
+
             </div>
 
             <StepIndicator currentStep={step} />
 
+            {/* Step 1 */}
             {step === 1 && (
               <Step1Account
                 data={predictionData}
@@ -205,6 +296,7 @@ export default function PredictionWizard() {
               />
             )}
 
+            {/* Step 2 */}
             {step === 2 && (
               <Step2Post
                 data={predictionData}
@@ -214,6 +306,7 @@ export default function PredictionWizard() {
               />
             )}
 
+            {/* Step 3 */}
             {step === 3 && (
               <Step3History
                 data={predictionData}
@@ -226,21 +319,20 @@ export default function PredictionWizard() {
           </>
         )}
 
-        {/* ============================== */}
+        {/* ========================================= */}
         {/* Prediction Result */}
-        {/* ============================== */}
+        {/* ========================================= */}
 
-        {prediction && recommendation && !loading && (
-          <PredictionResult
-            result={prediction}
-            recommendation={recommendation}
-            onRestart={() => {
-              setPrediction(null);
-              setRecommendation(null);
-              setStep(1);
-            }}
-          />
-        )}
+        {!loading &&
+          !error &&
+          prediction &&
+          recommendation && (
+            <PredictionResult
+              result={prediction}
+              recommendation={recommendation}
+              onRestart={handleRestart}
+            />
+          )}
 
       </div>
     </FormProvider>
