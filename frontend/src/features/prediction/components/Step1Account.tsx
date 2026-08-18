@@ -1,6 +1,6 @@
 import type { PredictionData } from "./PredictionWizard";
 
-import { User, Users, TrendingUp } from "lucide-react";
+import { User, TrendingUp } from "lucide-react";
 
 import Input from "@/components/ui/Input";
 import Label from "@/components/ui/Label";

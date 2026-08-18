@@ -5,15 +5,12 @@ import {
   Share2,
   Eye,
   BarChart3,
-  Sparkles,
 } from "lucide-react";
 
 import KnowledgeSources from "./KnowledgeSources";
 import AIRecommendation from "./AIRecommendation";
 import AIContentScore from "./AIContentScore";
 import ModelInsights from "./ModelInsights";
-
-import { Download } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import ResultMetric from "@/components/ui/ResultMetric";
@@ -37,7 +34,6 @@ export default function PredictionResult({
   const prediction = result.predictions;
   const classification = result.classification;
   const confidence = result.confidence;
-  const ai = recommendation.ai;
 
   return (
     <WizardCard

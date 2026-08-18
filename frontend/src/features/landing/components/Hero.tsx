@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { ChevronRight, Zap, TrendingUp } from "lucide-react";
+import { ChevronRight, TrendingUp } from "lucide-react";
 
 
 export default function Hero() {

@@ -1,5 +1,4 @@
 import {
-  Calendar,
   Clapperboard,
   Film,
   Image,
